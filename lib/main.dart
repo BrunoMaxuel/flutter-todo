@@ -51,7 +51,7 @@ class TaskListScreen extends StatefulWidget {
 }
 
 class _TaskListScreenState extends State<TaskListScreen> {
-  late List<String> tasks; // Lista de tarefas
+  late List<String> tasks; // Lista de tarefas inicializada
 
   @override
   void initState() {
@@ -62,7 +62,8 @@ class _TaskListScreenState extends State<TaskListScreen> {
   Future<void> _loadTasks() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      tasks = prefs.getStringList('tasks') ?? []; // Obtemos a lista de tarefas salva
+      tasks = prefs.getStringList('tasks') ??
+          []; // Obtemos a lista de tarefas salva
     });
   }
 
@@ -112,7 +113,8 @@ class _TaskListScreenState extends State<TaskListScreen> {
                   onPressed: () async {
                     final editedTask = await Navigator.pushNamed(
                         context, '/addTask',
-                        arguments: TaskScreenArguments(tasks[index], "Editar Tarefa"));
+                        arguments:
+                            TaskScreenArguments(tasks[index], "Editar Tarefa"));
                     if (editedTask != null) {
                       editTask(index, editedTask as String);
                     }
@@ -126,7 +128,8 @@ class _TaskListScreenState extends State<TaskListScreen> {
                       builder: (BuildContext context) {
                         return AlertDialog(
                           title: const Text('Confirmar exclusão'),
-                          content: const Text('Tem certeza de que deseja excluir esta tarefa?'),
+                          content: const Text(
+                              'Tem certeza de que deseja excluir esta tarefa?'),
                           actions: <Widget>[
                             TextButton(
                               onPressed: () {
@@ -137,7 +140,7 @@ class _TaskListScreenState extends State<TaskListScreen> {
                             TextButton(
                               onPressed: () {
                                 deleteTask(index);
-                                Navigator.of(context).pop(); 
+                                Navigator.of(context).pop();
                               },
                               child: const Text('Excluir'),
                             ),
@@ -154,7 +157,8 @@ class _TaskListScreenState extends State<TaskListScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          final newTask = await Navigator.pushNamed(context, '/addTask', arguments: TaskScreenArguments("", "Adicionar Tarefa"));
+          final newTask = await Navigator.pushNamed(context, '/addTask',
+              arguments: TaskScreenArguments("", "Adicionar Tarefa"));
           if (newTask != null) {
             addTask(newTask as String);
           }
@@ -179,13 +183,14 @@ class AddTaskScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TextEditingController texto = TextEditingController();
-    final args = ModalRoute.of(context)!.settings.arguments as TaskScreenArguments?;
-    texto.text = args?.task ?? ''; 
+    final args =
+        ModalRoute.of(context)!.settings.arguments as TaskScreenArguments?;
+    texto.text = args?.task ?? '';
 
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(args?.title ?? ''), 
+        title: Text(args?.title ?? ''),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8),
@@ -205,7 +210,10 @@ class AddTaskScreen extends StatelessWidget {
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
-                      content:  Text('A tarefa deve ter pelo menos 4 caracteres.'),
+                      behavior: SnackBarBehavior.floating,
+                      margin: EdgeInsets.only(top: 90.0),
+                      padding: EdgeInsets.all(30.0),
+                      content: Text('A tarefa deve ter pelo menos 4 caracteres.'),
                     ),
                   );
                 }
@@ -214,13 +222,29 @@ class AddTaskScreen extends StatelessWidget {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                Navigator.pop(context, texto.text);
+                final task = texto.text;
+                if (task.length > 3) {
+                  Navigator.pop(context, task);
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      behavior: SnackBarBehavior.floating,
+                      margin: EdgeInsets.only(top: 90.0),
+                      padding: EdgeInsets.all(30.0),
+                      content: Text('A tarefa deve ter pelo menos 4 caracteres.'),
+                    ),
+                  );
+                }
               },
               style: ElevatedButton.styleFrom(
-                minimumSize: const Size(150, 50), 
-                padding: const EdgeInsets.symmetric(vertical: 19, horizontal: 22), 
+                minimumSize: const Size(150, 50),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 19, horizontal: 22),
               ),
-              child: const Text('Salvar', style: TextStyle(fontSize: 20),),
+              child: const Text(
+                'Salvar',
+                style: TextStyle(fontSize: 20),
+              ),
             ),
           ],
         ),
