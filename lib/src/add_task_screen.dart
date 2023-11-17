@@ -1,38 +1,67 @@
 import 'package:flutter/material.dart';
+import 'home_screen.dart';
 
 class AddTaskScreen extends StatelessWidget {
   const AddTaskScreen({Key? key}) : super(key: key);
 
+  validar(value, context) {
+    if (value.length >= 4) {
+      Navigator.pop(context, value);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          padding: EdgeInsets.all(30.0),
+          content: Text('A tarefa deve ter pelo menos 4 caracteres.'),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final TextEditingController _textEditingController =
-        TextEditingController();
-    final args = ModalRoute.of(context)!.settings.arguments as String?;
-    _textEditingController.text = args ?? '';
+    final TextEditingController inputValue = TextEditingController();
+    final args =
+        ModalRoute.of(context)!.settings.arguments as TaskScreenArguments?;
+    inputValue.text = args?.task ?? '';
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Adicionar/Editar Tarefa'),
+        backgroundColor: corRosa,
+        centerTitle: true,
+        title: Text(args?.title ?? ''),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(8),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextField(
-              controller: _textEditingController,
-              decoration: InputDecoration(
+              controller: inputValue,
+              decoration: const InputDecoration(
                 labelText: 'Nova Tarefa',
+                contentPadding: EdgeInsets.all(20.0),
+                border: OutlineInputBorder(),
               ),
               onSubmitted: (value) {
-                Navigator.pop(context, value);
+                validar(value, context);
               },
             ),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                Navigator.pop(context, _textEditingController.text);
+                final task = inputValue.text;
+                validar(task, context);
               },
-              child: const Text('Salvar'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: corRosa,
+                minimumSize: const Size(150, 50),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 19, horizontal: 22),
+              ),
+              child: const Text(
+                'Salvar',
+                style: TextStyle(fontSize: 20),
+              ),
             ),
           ],
         ),

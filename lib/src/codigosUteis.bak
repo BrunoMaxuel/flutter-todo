@@ -1,0 +1,37 @@
+// MaterialColor criarMaterialColor(Color cor) {
+//   final Map<int, Color> swatch = {
+//     50: cor.withOpacity(0.1),
+//     100: cor.withOpacity(0.2),
+//     200: cor.withOpacity(0.3),
+//     300: cor.withOpacity(0.4),
+//     400: cor.withOpacity(0.5),
+//     500: cor.withOpacity(0.6),
+//     600: cor.withOpacity(0.7),
+//     700: cor.withOpacity(0.8),
+//     800: cor.withOpacity(0.9),
+//     900: cor.withOpacity(1.0),
+//   };
+//   return MaterialColor(cor.value, swatch);
+// }
+
+// class MyApp extends StatelessWidget {
+//   const MyApp({Key? key}) : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     const cor = Color.fromRGBO(210, 35, 207, 1);
+//     final cor_rosa = criarMaterialColor(cor);
+//     return MaterialApp(
+//       title: 'Lista de Tarefas',
+//       theme: ThemeData(
+//         primarySwatch: cor_rosa,
+//         visualDensity: VisualDensity.adaptivePlatformDensity,
+//       ),
+//       initialRoute: '/',
+//       routes: {
+//         '/': (context) => const TaskListScreen(),
+//         '/addTask': (context) => const AddTaskScreen(),
+//       },
+//     );
+//   }
+// }
