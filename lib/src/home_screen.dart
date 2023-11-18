@@ -15,6 +15,8 @@ class Task {
 }
 
 Color corRosa = const Color.fromRGBO(210, 35, 207, 1);
+Color corAzul = Color.fromARGB(255, 38, 108, 178);
+
 
 class _TaskListScreenState extends State<TaskListScreen> {
   late List<Task> tasks = [];
@@ -95,8 +97,7 @@ class _TaskListScreenState extends State<TaskListScreen> {
               border: Border.all(width: 1, color: Colors.grey),
             ),
             child: ListTile(
-              tileColor:
-                 const Color.fromRGBO(255, 131, 253, 1), // Cor de fundo do ListTile
+              tileColor: Color.fromRGBO(255, 213, 255, 1),
               contentPadding: const EdgeInsets.symmetric(horizontal: 16),
               leading: Checkbox(
                 value: tasks[index].isChecked,
