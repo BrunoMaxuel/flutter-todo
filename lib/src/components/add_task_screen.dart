@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import '../helpers/suprimentos.dart';
 import 'home_screen.dart';
 
 class AddTaskScreen extends StatelessWidget {
-  const AddTaskScreen({Key? key}) : super(key: key);
+   AddTaskScreen({Key? key}) : super(key: key);
 
   validar(value, context) {
     if (value.length >= 4) {
@@ -16,6 +17,8 @@ class AddTaskScreen extends StatelessWidget {
       );
     }
   }
+  
+   suprimentos supri =  suprimentos();
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +29,7 @@ class AddTaskScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: corRosa,
+        backgroundColor: supri.rosaEscuro,
         centerTitle: true,
         title: Text(args?.title ?? ''),
       ),
@@ -53,7 +56,7 @@ class AddTaskScreen extends StatelessWidget {
                 validar(task, context);
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: corRosa,
+                backgroundColor: supri.rosaEscuro,
                 minimumSize: const Size(150, 50),
                 padding:
                     const EdgeInsets.symmetric(vertical: 19, horizontal: 22),
